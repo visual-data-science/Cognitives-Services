@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Home";
+    var example = "https://goo.gl/26ku3R";
+}
+@model PredictingImages.ViewModel.ResultViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row star-wars-start">
+            <img src="~/images/detect-star-wars.jpg" width="100%" />
+        </div>
+        <div class="row desc-app">
+            This sample application is intended to detect 
+            <span class="bold">Darth Vader</span> or
+            <span class="bold">Kylo Ren</span> in images using 
+            the <a href="https://customvision.ai/" target="_blank">customvision.ai</a> 
+            API from Microsoft.
+        </div>
+        <form asp-controller="Home" asp-action="Index" method="post">
+            <div class="form-group row">
+                <div class="col-sm-11">
+                    <input 
+                        id="image" 
+                        name="image"
+                        asp-for="@example"
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Url image">
+                </div>
+                <div class="col-sm-1">
+                    <button type="submit" class="btn btn-primary">Find out</button>
+                    
+                </div>
+            </div>
+        </form>
+        @if (!string.IsNullOrEmpty(@Model.Label)) {
+            <div class="row">
+                <div class="col-md-12 center result-detected">
+                    <div class="result-title">
+                        Result: @Model.Label
+                    </div>
+                    <img 
+                        src="@Model.Url" 
+                        title="@Model.Label" 
+                        alt="@Model.Label" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
