@@ -8,7 +8,7 @@ This project aims to test and present several tools for the classification of im
 
 ### Application created to test Microsoft Cognitive Service API
 
-You can test that service accessing this <a href="https://predictimages.azurewebsites.net/" target="_blank">application</a>. To test, you must copy the url of some image with Darth Vader or Kylo Ren on the internet and paste it into the input field of the application.
+You can test that service accessing this <a href="http://predictimages.azurewebsites.net/" target="_blank">application</a>. To test, you must copy the url of some image with Darth Vader or Kylo Ren on the internet and paste it into the input field of the application.
 Examples:
 * <a href="https://geeksaw.com.br/wp-content/uploads/2017/03/darth-vader-1-cover-header.jpg" target="_blank">Darth Vader</a>
 * <a href="http://ambrosia.com.br/wp-content/uploads/2015/12/Kylo-Ren-In-Star-Wars.jpg" target="_blank">Kylo Ren</a>
