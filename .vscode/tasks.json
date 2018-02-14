@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/PredictingImages.csproj"
+                "${workspaceFolder}/src/ComputerVision/ComputerVision.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

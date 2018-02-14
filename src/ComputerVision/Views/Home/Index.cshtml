@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Analyze";
+    var example = "https://goo.gl/26ku3R";
+}
+@model ComputerVision.ViewModel.AnalysisViewModel
+
+<div class="row content">
+    <div class="col-md-3 col-h-100">
+        <img 
+            src="~/images/cognitiveservicescomputervision.png" 
+            alt="Computer Vision" 
+            title="Computer Vision" />
+    </div>
+    <div class="col-md-9 col-h-100">
+            <div class="row">
+                <form asp-controller="Home" asp-action="Index" method="post">
+                    <div class="col-md-12">
+                        <div class="col-md-12">
+                            <h1 class="title-app">Computer Vision</h1>
+                        </div>
+                        <div class="col-md-10">
+                            <input 
+                                id="image" 
+                                name="image"
+                                type="text" 
+                                asp-for="@example"
+                                class="form-control" 
+                                placeholder="Url image">
+                        </div>
+                        <div class="col-md-2">
+                            <button 
+                                type="submit" 
+                                class="btn btn-primary">Find out</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-3 example-images">
+                    <img src="~/images/landscape.jpg" title="" alt="" />
+                </div>
+                <div class="col-md-3 example-images">
+                    <img src="~/images/people.jpg" title="" alt="" />
+                </div>
+                <div class="col-md-3 example-images">
+                    <img src="~/images/pizza.jpg" title="" alt="" />
+                </div>
+                <div class="col-md-3 example-images">
+                    <img src="~/images/car.jpg" title="" alt="" />
+                </div>
+            </div>
+        
+    </div>
+</div>
+<div class="row">
+    <div class="jumbotron">
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam orci, maximus vitae ligula finibus, vestibulum accumsan purus. Etiam elit nisl, ullamcorper eu placerat volutpat, placerat vitae tortor. Vivamus id velit iaculis, molestie sapien scelerisque, varius velit. Sed bibendum, ante nec suscipit vulputate, turpis massa semper metus, eget auctor turpis mauris in ante. Integer eget ultrices quam. Donec eu pellentesque velit. Aenean at nunc justo. Maecenas placerat felis et eleifend scelerisque. Suspendisse potenti. Praesent et velit nisl. In ac ante sed sem fermentum feugiat.</p>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+body{padding-top:50px;padding-bottom:20px}.body-content{padding-left:15px;padding-right:15px}.carousel-caption p{font-size:20px;line-height:1.4}.carousel-inner .item img[src$=".svg"]{width:100%}#qrCode{margin:15px}@media screen and (max-width:767px){.carousel-caption{display:none}}
+
+.content{
+    margin: 25px 0;
+}
+.col-h-100 {
+    height: 250px;
+}
+.title-app {
+    margin: 35px 0 10px 0;
+}
+
+.example-images{
+    margin: 20px 0 0 0;
+}
+.example-images img {
+    width: 160px;
+    height: 90px;
+}
+
+.jumbotron {
+    padding: 25px !important;
+}
