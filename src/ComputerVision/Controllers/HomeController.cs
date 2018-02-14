@@ -18,7 +18,7 @@ namespace ComputerVision.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string image)
         {
-            var key = "84b91b8855bf4ba5b060446e602ba1e3";
+            var key = "<KEY>";
             var uriBase = "https://brazilsouth.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
             var customVision = new ComputerVisionAnalysis(uriBase, key);
