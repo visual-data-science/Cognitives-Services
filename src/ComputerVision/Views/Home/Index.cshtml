@@ -1,6 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Analyze";
-    var example = "https://goo.gl/26ku3R";
+    ViewData["Title"] = "Image Analysis";
+    var example = "https://goo.gl/ArnQ3D";
 }
 @model ComputerVision.ViewModel.AnalysisViewModel
 
@@ -12,48 +12,92 @@
             title="Computer Vision" />
     </div>
     <div class="col-md-9 col-h-100">
-            <div class="row">
-                <form asp-controller="Home" asp-action="Index" method="post">
+        <div class="row">
+            <form asp-controller="Home" asp-action="Index" method="post">
+                <div class="col-md-12">
                     <div class="col-md-12">
-                        <div class="col-md-12">
-                            <h1 class="title-app">Computer Vision</h1>
-                        </div>
-                        <div class="col-md-10">
-                            <input 
-                                id="image" 
-                                name="image"
-                                type="text" 
-                                asp-for="@example"
-                                class="form-control" 
-                                placeholder="Url image">
-                        </div>
-                        <div class="col-md-2">
-                            <button 
-                                type="submit" 
-                                class="btn btn-primary">Find out</button>
-                        </div>
+                        <h1 class="title-app">Computer Vision</h1>
                     </div>
-                </form>
+                    <div class="col-md-10">
+                        <input 
+                            id="image" 
+                            name="image"
+                            type="text" 
+                            asp-for="@example"
+                            class="form-control" 
+                            placeholder="Url image">
+                    </div>
+                    <div class="col-md-2">
+                        <button 
+                            type="submit" 
+                            class="btn btn-primary">Find out</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-3 example-images">
+                <img src="~/images/landscape.jpg" title="" alt="" />
             </div>
-            <div class="row">
-                <div class="col-md-3 example-images">
-                    <img src="~/images/landscape.jpg" title="" alt="" />
-                </div>
-                <div class="col-md-3 example-images">
-                    <img src="~/images/people.jpg" title="" alt="" />
-                </div>
-                <div class="col-md-3 example-images">
-                    <img src="~/images/pizza.jpg" title="" alt="" />
-                </div>
-                <div class="col-md-3 example-images">
-                    <img src="~/images/car.jpg" title="" alt="" />
-                </div>
+            <div class="col-md-3 example-images">
+                <img src="~/images/people.jpg" title="" alt="" />
             </div>
+            <div class="col-md-3 example-images">
+                <img src="~/images/pizza.jpg" title="" alt="" />
+            </div>
+            <div class="col-md-3 example-images">
+                <img src="~/images/car.jpg" title="" alt="" />
+            </div>
+        </div>
         
     </div>
 </div>
 <div class="row">
-    <div class="jumbotron">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam orci, maximus vitae ligula finibus, vestibulum accumsan purus. Etiam elit nisl, ullamcorper eu placerat volutpat, placerat vitae tortor. Vivamus id velit iaculis, molestie sapien scelerisque, varius velit. Sed bibendum, ante nec suscipit vulputate, turpis massa semper metus, eget auctor turpis mauris in ante. Integer eget ultrices quam. Donec eu pellentesque velit. Aenean at nunc justo. Maecenas placerat felis et eleifend scelerisque. Suspendisse potenti. Praesent et velit nisl. In ac ante sed sem fermentum feugiat.</p>
-    </div>
+     @if (@Model != null) {
+        <h2>Result</h2>
+        if (@Model.Categories != null)
+        {
+            <div class="col-md-2">
+                <h3>Categories</h3>
+                @foreach (var category in @Model.Categories)
+                {
+                    <div>
+                        <span class="label label-success" title="@category.Score of confidence">
+                            @category.Name | @category.Score
+                        </span>
+                    </div>
+                }
+            </div>
+        }
+        // Show if content has a adult content
+        if (@Model.Adult != null)
+        {
+            <div class="col-md-2">
+                <h3>Adult</h3>
+                <ul>
+                    <li>IsAdultContent - @Model.Adult.IsAdultContent</li>
+                    <li>IsRacyContent - @Model.Adult.IsRacyContent</li>
+                    <li>AdultScore - @Model.Adult.AdultScore</li>
+                    <li>RacyScore - @Model.Adult.RacyScore</li>
+                </ul>
+            </div>
+        }
+        // Show if content has tags associated the image
+        if (@Model.Tags != null)
+        {
+            <div class="col-md-2">
+                <h3>Tags</h3>
+                @foreach (var tag in @Model.Tags)
+                {
+                    <div>
+                        <span class="label label-success">@tag.Name, @tag.Confidence</span>
+                    </div>
+                }
+            </div>
+        }
+     }else{
+         <div class="jumbotron">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam orci, maximus vitae ligula finibus, vestibulum accumsan purus. Etiam elit nisl, ullamcorper eu placerat volutpat, placerat vitae tortor. Vivamus id velit iaculis, molestie sapien scelerisque, varius velit. Sed bibendum, ante nec suscipit vulputate, turpis massa semper metus, eget auctor turpis mauris in ante. Integer eget ultrices quam. Donec eu pellentesque velit. Aenean at nunc justo. Maecenas placerat felis et eleifend scelerisque. Suspendisse potenti. Praesent et velit nisl. In ac ante sed sem fermentum feugiat.</p>
+        </div>
+     }
 </div>

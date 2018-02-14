@@ -13,12 +13,12 @@ namespace ComputerVision.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index() => View(new AnalysisViewModel());
+        public IActionResult Index() => View();
 
         [HttpPost]
         public async Task<IActionResult> Index(string image)
         {
-            var key = "<KEY>";
+            var key = "84b91b8855bf4ba5b060446e602ba1e3";
             var uriBase = "https://brazilsouth.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
             var customVision = new ComputerVisionAnalysis(uriBase, key);
