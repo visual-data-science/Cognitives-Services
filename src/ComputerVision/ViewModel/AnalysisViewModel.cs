@@ -4,6 +4,7 @@ namespace ComputerVision.ViewModel
 {
     public class AnalysisViewModel
     {
+        public string UrlImage { get; set; }
         public List<Category> Categories { get; set; }
         public Adult Adult { get; set; }
         public List<Tag> Tags { get; set; }

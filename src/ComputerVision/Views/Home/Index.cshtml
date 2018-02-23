@@ -24,7 +24,7 @@
                             name="image"
                             type="text" 
                             asp-for="@example"
-                            class="form-control" 
+                            class="form-control image-selected" 
                             placeholder="Url image">
                     </div>
                     <div class="col-md-2">
@@ -37,67 +37,159 @@
         </div>
         <div class="row">
             <div class="col-md-3 example-images">
-                <img src="~/images/landscape.jpg" title="" alt="" />
+                <img 
+                    src="~/images/landscape.jpg" 
+                    class="image-1" />
             </div>
             <div class="col-md-3 example-images">
-                <img src="~/images/people.jpg" title="" alt="" />
+                <img 
+                    src="~/images/people.jpg" 
+                    class="image-2" />
             </div>
             <div class="col-md-3 example-images">
-                <img src="~/images/pizza.jpg" title="" alt="" />
+                <img 
+                    src="~/images/pizza.jpg" 
+                    class="image-3" />
             </div>
             <div class="col-md-3 example-images">
-                <img src="~/images/car.jpg" title="" alt="" />
+                <img 
+                    src="~/images/car.jpg" 
+                    class="image-4" />
             </div>
         </div>
         
     </div>
 </div>
-<div class="row">
+<div class="row row-informations">
      @if (@Model != null) {
-        <h2>Result</h2>
-        if (@Model.Categories != null)
-        {
-            <div class="col-md-2">
-                <h3>Categories</h3>
-                @foreach (var category in @Model.Categories)
-                {
+        <h2 class="title-result">Image information</h2>
+        <div class="row">
+            @if (@Model.Description != null) {
+                <div class="col-md-12">
+                    <h3>Caption</h3>
+                    @foreach (var caption in @Model.Description.Captions)
+                    {
+                        <div>
+                            <span class="label label-primary caption">
+                                @caption.Text | @caption.Confidence
+                            </span>
+                        </div>
+                    }
+                </div>
+            }
+            @if (@Model.Categories != null) {
+                <div class="col-md-2">
+                    <h3>Categories</h3>
+                    @foreach (var category in @Model.Categories)
+                    {
+                        <div>
+                            <span class="label label-success" title="@category.Score of confidence">
+                                @category.Name | @category.Score
+                            </span>
+                        </div>
+                    }
+                </div>
+            }
+            @if (@Model.Adult != null) {
+                <div class="col-md-2">
+                    <h3>Adult</h3>
+                    <ul>
+                        <li>IsAdultContent - @Model.Adult.IsAdultContent</li>
+                        <li>IsRacyContent - @Model.Adult.IsRacyContent</li>
+                        <li>AdultScore - @Model.Adult.AdultScore</li>
+                        <li>RacyScore - @Model.Adult.RacyScore</li>
+                    </ul>
+                </div>
+            }
+            @if (@Model.Tags != null) {
+                <div class="col-md-2">
+                    <h3>Tags</h3>
+                    @foreach (var tag in @Model.Tags)
+                    {
+                        <div>
+                            <span class="label label-success">@tag.Name, @tag.Confidence</span>
+                        </div>
+                    }
+                </div>
+            }
+            @if (@Model.Description != null) {
+                <div class="col-md-2">
+                    <h3>Tags</h3>
                     <div>
-                        <span class="label label-success" title="@category.Score of confidence">
-                            @category.Name | @category.Score
-                        </span>
+                        @foreach (var tag in @Model.Description.Tags)
+                        {
+                            <span class="label label-success">@tag</span>
+                        }
                     </div>
-                }
-            </div>
-        }
-        // Show if content has a adult content
-        if (@Model.Adult != null)
-        {
-            <div class="col-md-2">
-                <h3>Adult</h3>
-                <ul>
-                    <li>IsAdultContent - @Model.Adult.IsAdultContent</li>
-                    <li>IsRacyContent - @Model.Adult.IsRacyContent</li>
-                    <li>AdultScore - @Model.Adult.AdultScore</li>
-                    <li>RacyScore - @Model.Adult.RacyScore</li>
-                </ul>
-            </div>
-        }
-        // Show if content has tags associated the image
-        if (@Model.Tags != null)
-        {
-            <div class="col-md-2">
-                <h3>Tags</h3>
-                @foreach (var tag in @Model.Tags)
-                {
+                </div>
+            }
+            @if (@Model.Faces != null) {
+                <div class="col-md-2">
+                    <h3>Faces</h3>
+                    @foreach (var face in @Model.Faces)
+                    {
+                        <div>
+                            <span class="label label-success">Age: @face.Age</span>
+                            <span class="label label-success">Gender: @face.Gender</span>
+                            <span class="label label-success">Position Left: @face.FaceRectangle.Left</span>
+                            <span class="label label-success">Position Top: @face.FaceRectangle.Top</span>
+                            <span class="label label-success">Position Width: @face.FaceRectangle.Width</span>
+                            <span class="label label-success">Position Height: @face.FaceRectangle.Height</span>
+                        </div>
+                    }
+                </div>
+            }
+            @if (@Model.Color != null) {
+                <div class="col-md-2">
+                    <h3>Color</h3>
+                    <div><span class="label label-success">Foreground dominant colord: @Model.Color.DominantColorForeground</span></div>
+                    <div><span class="label label-success">Background dominant color: @Model.Color.DominantColorBackground</span></div>
+                    <div><span class="label label-success">Accent color: @Model.Color.AccentColor</span></div>
+                    <div><span class="label label-success">Is black or white: @Model.Color.IsBWImg</span></div>
                     <div>
-                        <span class="label label-success">@tag.Name, @tag.Confidence</span>
+                        @foreach (var dominantColors in @Model.Color.DominantColors)
+                        {
+                            <span class="label label-success">@dominantColors</span>
+                        }
                     </div>
-                }
+                </div>
+            }
+            @if (@Model.Metadata != null) {
+                <div class="col-md-2">
+                    <h3>Metadata</h3>
+                    <div><span class="label label-success">Width: @Model.Metadata.Width</span></div>
+                    <div><span class="label label-success">Height: @Model.Metadata.Height</span></div>
+                    <div><span class="label label-success">Format: @Model.Metadata.Format</span></div>
+                </div>
+            }
+            @if (@Model.ImageType != null) {
+                <div class="col-md-2">
+                    <h3>Image Type</h3>
+                    <div>
+                        <span class="label label-success">Clipart Type: @Model.ImageType.ClipArtType</span>
+                    </div>
+                    <div>
+                        <span class="label label-success">Drawing Type: @Model.ImageType.LineDrawingType</span>
+                    </div>
+                </div>
+            }
+            
+        </div>
+        <div class="row row-margin-top-20">
+            <div class="col-md-12">
+                <img 
+                    src="@Model.UrlImage" 
+                    title="image" 
+                    alt="image" 
+                    class="result-image" />
             </div>
-        }
+        </div>
      }else{
-         <div class="jumbotron">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis quam orci, maximus vitae ligula finibus, vestibulum accumsan purus. Etiam elit nisl, ullamcorper eu placerat volutpat, placerat vitae tortor. Vivamus id velit iaculis, molestie sapien scelerisque, varius velit. Sed bibendum, ante nec suscipit vulputate, turpis massa semper metus, eget auctor turpis mauris in ante. Integer eget ultrices quam. Donec eu pellentesque velit. Aenean at nunc justo. Maecenas placerat felis et eleifend scelerisque. Suspendisse potenti. Praesent et velit nisl. In ac ante sed sem fermentum feugiat.</p>
+        <div class="jumbotron">
+            <p>
+                This application will analyse and  extracts a rich set of informations concern image using a Microsoft API called Computer Vision API. 
+                Computer Vision API is a Microsoft Service that provides state-of-the-art algorithms to process images and return information about colors, categories, tags, descriptions, metadatas and more.
+            </p>
         </div>
      }
 </div>

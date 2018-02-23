@@ -51,7 +51,23 @@
     width: 160px;
     height: 90px;
 }
-
 .jumbotron {
     padding: 25px !important;
+}
+.result-image{
+    width: 100%
+}
+
+.row-margin-top-20{
+    margin-top: 20px;
+}
+
+.row-informations .label{
+    font-size: 10px;
+}
+.row-informations .caption{
+    font-size: 12px;
+}
+.example-images{
+    cursor: pointer;
 }

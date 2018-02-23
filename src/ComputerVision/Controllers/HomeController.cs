@@ -18,12 +18,19 @@ namespace ComputerVision.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string image)
         {
+            // That variables will load key and url where will be processed from Microsoft
             var key = "<KEY>";
             var uriBase = "https://brazilsouth.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
+            // This code predict informations concern image from API Microsoft
             var customVision = new ComputerVisionAnalysis(uriBase, key);
             var result = JsonConvert.DeserializeObject<AnalysisViewModel>(
                 await customVision.MakeAnalysis(image));
+            
+            // Set an image url in object
+            result.UrlImage = image;
+
+            // Return a view and the object that will be processed
             return View("Index", result);
         }
 
