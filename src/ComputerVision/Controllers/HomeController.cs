@@ -20,7 +20,7 @@ namespace ComputerVision.Controllers
         {
             // That variables will load key and url where will be processed from Microsoft
             var key = "<KEY>";
-            var uriBase = "https://brazilsouth.api.cognitive.microsoft.com/vision/v1.0/analyze";
+            var uriBase = "https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze";
 
             // This code predict informations concern image from API Microsoft
             var customVision = new ComputerVisionAnalysis(uriBase, key);
