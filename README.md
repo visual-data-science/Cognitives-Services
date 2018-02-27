@@ -8,8 +8,8 @@ This project aims to test and present several tools for the classification of im
 
 ## <a href="https://github.com/Murillo/Cognitives-Services/tree/master/src/CustonVision">Custom Vision Microsoft</a>
 
-<a href="https://customvision.ai" target="_blank">Custom Vision</a> is a Microsoft service used for image classification. This service is a new version of <a href="https://www.microsoft.com/cognitive-services/en-us/computer-vision-api" target="_blank">Microsoft’s Computer Vision API</a> that allows users to specialize a pre-trained model (ResNet, AlexNet) using images they want to sort.
+<a href="https://customvision.ai" target="_blank">Custom Vision</a> is a Microsoft service used for image classification. This service is a new version of <a href="https://www.microsoft.com/cognitive-services/en-us/computer-vision-api" target="_blank">Microsoft’s Computer Vision API</a> that allows users to specialize a pre-trained model (ResNet, AlexNet) using images they want to sort. There is an article on <a href="https://medium.com/cwi-software/classificando-imagens-com-o-custom-vision-da-microsoft-c6ee54aba953">Medium (Portuguese)</a> that explain how this service works.
 
 
 ## Support
-Do you have any questions? msgrubler@gmail.com
+Do you have any questions? Send a message to msgrubler@gmail.com
