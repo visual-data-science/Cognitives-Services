@@ -38,7 +38,7 @@ namespace ComputerVision.Api
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
                 // Request parameters. A third optional parameter is "details".
-                var requestParameters = "visualFeatures=Categories,Description,Color&language=en";
+                var requestParameters = "visualFeatures=Categories,Description,Color,Faces&language=en";
 
                 // Assemble the URI for the REST API Call.
                 var uri = _uriBase + "?" + requestParameters;
