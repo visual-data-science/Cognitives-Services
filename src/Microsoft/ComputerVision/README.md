@@ -8,10 +8,10 @@ This <a href="https://analyzingimages.azurewebsites.net/">application</a> analyz
 
 First page with input to analyse information about image.
 
-<img src="./../../images/ComputerVisionApi.png">
+<img src="./../../../images/ComputerVisionApi.png">
 
 Result of analysis showed in labels.
 
-<img src="./../../images/predict.png">
+<img src="./../../../images/predict.png">
 
 Do you have any questions? Send a message to msgrubler@gmail.com
