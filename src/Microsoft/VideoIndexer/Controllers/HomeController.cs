@@ -11,21 +11,22 @@ namespace VideoIndexer.Controllers
 {
     public class HomeController : Controller
     {
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
              // That variables will load key and url where will be processed from Microsoft
-            var apiKey = "";
-            var apiUrl = "";
-            var location = "";
-            var accountId = "";
+            var apiKey = "<YOUR Key>";
+            var apiUrl = "https://api.videoindexer.ai";
+            var location = "trial";
+            var accountId = "<YOUR AccountId>";
             var video = "https://images.all-free-download.com/footage_preview/mp4/horses_101.mp4";
 
             // This code predict informations concern image from API Microsoft
             var videoIndexer = new VideoInformation(apiKey, apiUrl, location, accountId);
-            var result = videoIndexer.Process(video);
+            videoIndexer.Run(video);
+            var url = videoIndexer.GetPlayerWidgetUrl();
 
             // Return a view and the object that will be processed
-            return View("Index");
+            return View("Index", url);
         }
 
         public IActionResult Error()

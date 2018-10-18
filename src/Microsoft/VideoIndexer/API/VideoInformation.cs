@@ -10,12 +10,15 @@ using Newtonsoft.Json;
 
 namespace VideoIndexer.Api
 {
-    internal class VideoInformation
+    public class VideoInformation
     {
+        private readonly int _timeWaiting = 10000;
         private readonly string _apiUrl;
         private readonly string _apiKey;
         private readonly string _location;
         private readonly string _accountId;
+        private string _videoAccessToken;
+        private string _videoId;
 
         public VideoInformation(string apiKey, string apiUrl, string location, string accountId)
         {
@@ -25,7 +28,18 @@ namespace VideoIndexer.Api
             _accountId = accountId;
         }
 
-        public string Process(string videoUrl)
+        public string GetPlayerWidgetUrl()
+        {
+            var handler = new HttpClientHandler(); 
+            handler.AllowAutoRedirect = false; 
+            using (var client = new HttpClient(handler))
+            {
+                var playerWidgetRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/{_videoId}/PlayerWidget?accessToken={_videoAccessToken}").Result;
+                return playerWidgetRequestResult.Headers.Location.ToString();
+            }
+        }
+
+        public void Run(string videoUrl)
         {
             var handler = new HttpClientHandler(); 
             handler.AllowAutoRedirect = false; 
@@ -47,23 +61,36 @@ namespace VideoIndexer.Api
                 var returnInfos = JsonConvert.DeserializeObject<dynamic>(uploadResult);
                 var returnInfosString = returnInfos.ToString();
 
-                return returnInfos["id"].ToString();
+                _videoId = returnInfos["id"].ToString(); 
+                WaitingProcess();
+                // return returnInfos["id"].ToString();
             }
         }
 
-        public Task<string> StatusProcess(string videoId)
+        private void WaitingProcess()
+        {
+            while (true)
+            {
+                Thread.Sleep(_timeWaiting);
+                var processingState = StatusProcess();
+                if (processingState != "Uploaded" && processingState != "Processing")
+                    break;
+            }
+        }
+        
+        private string StatusProcess()
         {
             var handler = new HttpClientHandler(); 
             handler.AllowAutoRedirect = false; 
             using (var client = new HttpClient(handler))
             {
                 client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", _apiKey);
-                var videoTokenRequestResult = client.GetAsync($"{_apiUrl}/auth/{_location}/Accounts/{_accountId}/Videos/{videoId}/AccessToken?allowEdit=true").Result;
-                var videoAccessToken = videoTokenRequestResult.Content.ReadAsStringAsync().Result.Replace("\"", "");
+                var videoTokenRequestResult = client.GetAsync($"{_apiUrl}/auth/{_location}/Accounts/{_accountId}/Videos/{_videoId}/AccessToken?allowEdit=true").Result;
+                _videoAccessToken = videoTokenRequestResult.Content.ReadAsStringAsync().Result.Replace("\"", "");
 
                 client.DefaultRequestHeaders.Remove("Ocp-Apim-Subscription-Key");
 
-                var videoGetIndexRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/{videoId}/Index?accessToken={videoAccessToken}&language=English").Result;
+                var videoGetIndexRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/{_videoId}/Index?accessToken={_videoAccessToken}&language=English").Result;
                 var videoGetIndexResult = videoGetIndexRequestResult.Content.ReadAsStringAsync().Result;
                 return JsonConvert.DeserializeObject<dynamic>(videoGetIndexResult)["state"].ToString();
             }
