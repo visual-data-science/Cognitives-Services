@@ -1,13 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Home";
 }
-@model string
+@model VideoIndexer.ViewModel.VideoInformationViewModel
 
 <div class="row">
     <div class="col-md-12">
         <h2>Video Indexer</h2>
         <div id="videoInfo">
-            <iframe src="@Model" width="300"></iframe> 
+            <iframe src="@Model.PlayerWidgetUrl" width="400"></iframe> 
+            <div>@Model.Insights</div>
         </div>
     </div>
 </div>

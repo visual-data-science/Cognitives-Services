@@ -17,8 +17,51 @@ namespace VideoIndexer.Api
         private readonly string _apiKey;
         private readonly string _location;
         private readonly string _accountId;
+        private string _accountAccessToken;
         private string _videoAccessToken;
         private string _videoId;
+
+        public string Insights
+        {
+            get
+            {
+                try
+                {
+                    var handler = new HttpClientHandler();
+                    handler.AllowAutoRedirect = false;
+                    using (var client = new HttpClient(handler))
+                    {
+                        var searchRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/Search?accessToken={_accountAccessToken}&id={_videoId}").Result;
+                        return searchRequestResult.Content.ReadAsStringAsync().Result;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return ex.Message.ToString();
+                }
+            }
+        }
+
+        public string PlayerWidgetUrl
+        {
+            get
+            {
+                try
+                {
+                    var handler = new HttpClientHandler();
+                    handler.AllowAutoRedirect = false;
+                    using (var client = new HttpClient(handler))
+                    {
+                        var playerWidgetRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/{_videoId}/PlayerWidget?accessToken={_videoAccessToken}").Result;
+                        return playerWidgetRequestResult.Headers.Location.ToString();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return ex.Message.ToString();
+                }
+            }
+        }
 
         public VideoInformation(string apiKey, string apiUrl, string location, string accountId)
         {
@@ -28,19 +71,11 @@ namespace VideoIndexer.Api
             _accountId = accountId;
         }
 
-        public string GetPlayerWidgetUrl()
-        {
-            var handler = new HttpClientHandler(); 
-            handler.AllowAutoRedirect = false; 
-            using (var client = new HttpClient(handler))
-            {
-                var playerWidgetRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/{_videoId}/PlayerWidget?accessToken={_videoAccessToken}").Result;
-                return playerWidgetRequestResult.Headers.Location.ToString();
-            }
-        }
-
         public void Run(string videoUrl)
         {
+            if (string.IsNullOrWhiteSpace(videoUrl))
+                throw new ArgumentNullException(nameof(videoUrl));
+
             var handler = new HttpClientHandler(); 
             handler.AllowAutoRedirect = false; 
             using (var client = new HttpClient(handler))
@@ -49,12 +84,12 @@ namespace VideoIndexer.Api
 
                 // obtain account access token
                 var accountAccessTokenRequestResult = client.GetAsync($"{_apiUrl}/auth/{_location}/Accounts/{_accountId}/AccessToken?allowEdit=true").Result;
-                var accountAccessToken = accountAccessTokenRequestResult.Content.ReadAsStringAsync().Result.Replace("\"", "");
+                _accountAccessToken = accountAccessTokenRequestResult.Content.ReadAsStringAsync().Result.Replace("\"", "");
                 client.DefaultRequestHeaders.Remove("Ocp-Apim-Subscription-Key");
 
                 // upload a video
                 var content = new MultipartFormDataContent();
-                var uploadRequestResult = client.PostAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos?accessToken={accountAccessToken}&name=some_name&description=some_description&privacy=private&partition=some_partition&videoUrl={videoUrl}", content).Result;
+                var uploadRequestResult = client.PostAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos?accessToken={_accountAccessToken}&name=some_name&description=some_description&privacy=private&partition=some_partition&videoUrl={videoUrl}", content).Result;
                 var uploadResult = uploadRequestResult.Content.ReadAsStringAsync().Result;
 
                 // get the video id from the upload result
@@ -63,7 +98,6 @@ namespace VideoIndexer.Api
 
                 _videoId = returnInfos["id"].ToString(); 
                 WaitingProcess();
-                // return returnInfos["id"].ToString();
             }
         }
 
@@ -77,7 +111,7 @@ namespace VideoIndexer.Api
                     break;
             }
         }
-        
+
         private string StatusProcess()
         {
             var handler = new HttpClientHandler(); 

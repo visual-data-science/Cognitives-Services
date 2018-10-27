@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using VideoIndexer.Api;
 using VideoIndexer.Models;
+using VideoIndexer.ViewModel;
 
 namespace VideoIndexer.Controllers
 {
@@ -13,7 +14,7 @@ namespace VideoIndexer.Controllers
     {
         public IActionResult Index()
         {
-             // That variables will load key and url where will be processed from Microsoft
+            // That variables will load key and url where will be processed from Microsoft
             var apiKey = "<YOUR Key>";
             var apiUrl = "https://api.videoindexer.ai";
             var location = "trial";
@@ -23,10 +24,13 @@ namespace VideoIndexer.Controllers
             // This code predict informations concern image from API Microsoft
             var videoIndexer = new VideoInformation(apiKey, apiUrl, location, accountId);
             videoIndexer.Run(video);
-            var url = videoIndexer.GetPlayerWidgetUrl();
+            var url = videoIndexer.PlayerWidgetUrl;
 
             // Return a view and the object that will be processed
-            return View("Index", url);
+            return View("Index", new VideoInformationViewModel{
+                PlayerWidgetUrl = videoIndexer.PlayerWidgetUrl,
+                Insights = videoIndexer.Insights
+            });
         }
 
         public IActionResult Error()
