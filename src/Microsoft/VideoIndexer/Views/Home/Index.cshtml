@@ -7,8 +7,20 @@
     <div class="col-md-12">
         <h2>Video Indexer</h2>
         <div id="videoInfo">
-            <iframe src="@Model.PlayerWidgetUrl" width="400"></iframe> 
-            <div>@Model.Insights</div>
+            <iframe
+                frameborder="0" 
+                src="@Model.PlayerWidgetUrl" 
+                width="640" 
+                height="360"
+                allowfullscreen ></iframe> 
+            <div class="inline">
+                <iframe 
+                    width="640" 
+                    height="780" 
+                    src="@Model.Insights" 
+                    frameborder=" 0" 
+                    allowfullscreen="true"></iframe> 
+            </div>
         </div>
     </div>
 </div>

@@ -24,7 +24,6 @@ namespace VideoIndexer.Controllers
             // This code predict informations concern image from API Microsoft
             var videoIndexer = new VideoInformation(apiKey, apiUrl, location, accountId);
             videoIndexer.Run(video);
-            var url = videoIndexer.PlayerWidgetUrl;
 
             // Return a view and the object that will be processed
             return View("Index", new VideoInformationViewModel{
