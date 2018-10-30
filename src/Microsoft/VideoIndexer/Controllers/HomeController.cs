@@ -19,11 +19,16 @@ namespace VideoIndexer.Controllers
             var apiUrl = "https://api.videoindexer.ai";
             var location = "trial";
             var accountId = "<YOUR AccountId>";
-            var video = "https://images.all-free-download.com/footage_preview/mp4/horses_101.mp4";
+            var video = "http://images.all-free-download.com/footage_preview/mp4/horses_101.mp4";
 
             // This code predict informations concern image from API Microsoft
             var videoIndexer = new VideoInformation(apiKey, apiUrl, location, accountId);
-            videoIndexer.Run(video);
+            videoIndexer.Run(new MetaInformation{
+                Name = "Horse",
+                Description = "Description",
+                VideoUrl = video,
+                Privacy = Privacy.Public.ToString().ToLower()
+            });
 
             // Return a view and the object that will be processed
             return View("Index", new VideoInformationViewModel{

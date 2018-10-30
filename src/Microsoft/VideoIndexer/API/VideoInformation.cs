@@ -92,10 +92,10 @@ namespace VideoIndexer.Api
             _accountId = accountId;
         }
 
-        public void Run(string videoUrl)
+        public void Run(MetaInformation info)
         {
-            if (string.IsNullOrWhiteSpace(videoUrl))
-                throw new ArgumentNullException(nameof(videoUrl));
+            if (string.IsNullOrWhiteSpace(info.VideoUrl))
+                throw new ArgumentNullException(nameof(info.VideoUrl));
 
             var handler = new HttpClientHandler(); 
             handler.AllowAutoRedirect = false; 
@@ -110,7 +110,7 @@ namespace VideoIndexer.Api
 
                 // upload a video
                 var content = new MultipartFormDataContent();
-                var uploadRequestResult = client.PostAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos?accessToken={_accountAccessToken}&name=some_name&description=some_description&privacy=private&partition=some_partition&videoUrl={videoUrl}", content).Result;
+                var uploadRequestResult = client.PostAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos?accessToken={_accountAccessToken}&name={info.Name}&description=some_partition&privacy=private&partition=some_partition&videoUrl={info.VideoUrl}", content).Result;
                 var uploadResult = uploadRequestResult.Content.ReadAsStringAsync().Result;
 
                 // get the video id from the upload result
