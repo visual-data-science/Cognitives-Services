@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/ComputerVision/ComputerVision.csproj"
+                "${workspaceFolder}/src/Microsoft/VideoIndexer/VideoIndexer.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
