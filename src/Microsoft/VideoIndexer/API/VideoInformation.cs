@@ -110,7 +110,7 @@ namespace VideoIndexer.Api
 
                 // upload a video
                 var content = new MultipartFormDataContent();
-                var uploadRequestResult = client.PostAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos?accessToken={_accountAccessToken}&name={info.Name}&description=some_partition&privacy=private&partition=some_partition&videoUrl={info.VideoUrl}", content).Result;
+                var uploadRequestResult = client.PostAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos?accessToken={_accountAccessToken}&name={info.Name}&description={info.Description}&privacy={info.Privacy}&partition=some_partition&videoUrl={info.VideoUrl}", content).Result;
                 var uploadResult = uploadRequestResult.Content.ReadAsStringAsync().Result;
 
                 // get the video id from the upload result
