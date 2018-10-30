@@ -21,7 +21,7 @@ namespace VideoIndexer.Api
         private string _videoAccessToken;
         private string _videoId;
 
-        public string Insights
+        public string Search
         {
             get
             {
@@ -42,6 +42,27 @@ namespace VideoIndexer.Api
             }
         }
 
+        public string Insights
+        {
+            get
+            {
+                try
+                {
+                    var handler = new HttpClientHandler();
+                    handler.AllowAutoRedirect = false;
+                    using (var client = new HttpClient(handler))
+                    {
+                        var insightsWidgetRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/{_videoId}/InsightsWidget?accessToken={_videoAccessToken}&widgetType=Keywords&allowEdit=true").Result;
+                        return insightsWidgetRequestResult.Headers.Location.ToString();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    return ex.Message.ToString();
+                }
+            }
+        }
+        
         public string PlayerWidgetUrl
         {
             get
