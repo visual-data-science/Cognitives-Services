@@ -21,6 +21,14 @@ namespace VideoIndexer.Api
         private string _videoAccessToken;
         private string _videoId;
 
+        public string Embed 
+        { 
+            get
+            { 
+                return $@"https://www.videoindexer.ai/embed/insights/{_accountId}/{_videoId}/?version=2";
+            }
+        } 
+
         public string Search
         {
             get

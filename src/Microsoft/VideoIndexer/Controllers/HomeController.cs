@@ -33,7 +33,7 @@ namespace VideoIndexer.Controllers
             // Return a view and the object that will be processed
             return View("Index", new VideoInformationViewModel{
                 PlayerWidgetUrl = videoIndexer.PlayerWidgetUrl,
-                Insights = videoIndexer.Insights
+                Embed = videoIndexer.Embed
             });
         }
 
