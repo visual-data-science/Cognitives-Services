@@ -12,14 +12,17 @@ namespace VideoIndexer.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Index() => View();
+
+        [HttpPost]
+        public IActionResult Video()
         {
             // That variables will load key and url where will be processed from Microsoft
-            var apiKey = "<YOUR Key>";
+            var apiKey = "<key>";
             var apiUrl = "https://api.videoindexer.ai";
-            var location = "trial";
-            var accountId = "<YOUR AccountId>";
-            var video = "http://images.all-free-download.com/footage_preview/mp4/horses_101.mp4";
+            var location = "<location>";
+            var accountId = "<key>";
+            var video = "https://images.all-free-download.com/footage_preview/mp4/horses_101.mp4";
 
             // This code predict informations concern image from API Microsoft
             var videoIndexer = new VideoInformation(apiKey, apiUrl, location, accountId);
