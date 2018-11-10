@@ -1,0 +1,28 @@
+@{
+    ViewData["Title"] = "Video";
+}
+@model VideoIndexer.ViewModel.VideoInformationViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>@Model.Name</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <iframe
+                    frameborder="0" 
+                    src="@Model.PlayerWidgetUrl" 
+                    width="640" 
+                    height="360"
+                    allowfullscreen ></iframe> 
+            </div>
+            <div class="col-md-6">
+                <iframe 
+                    width="580" 
+                    height="780" 
+                    src="@Model.Embed" 
+                    frameborder="0" 
+                    allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+</div>
