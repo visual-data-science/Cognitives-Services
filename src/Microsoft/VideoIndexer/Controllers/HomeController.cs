@@ -34,7 +34,7 @@ namespace VideoIndexer.Controllers
             // This code predict informations concern image from API Microsoft
             var videoIndexer = new VideoInformation(apiKey, apiUrl, location, accountId);
             videoIndexer.Run(new MetaInformation{
-                Name = "Horse",
+                Name = id,
                 Description = "Description",
                 VideoUrl = video,
                 Privacy = Privacy.Public.ToString().ToLower()
