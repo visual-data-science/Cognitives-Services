@@ -1,6 +1,6 @@
 namespace VideoIndexer.Api
 {
-    public class MetaInformation
+    public sealed class MetaInformation
     {
         public string VideoUrl { get; set; }
 
