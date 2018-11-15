@@ -1,6 +1,6 @@
 namespace VideoIndexer.Api
 {
-    public class Time
+    public sealed class Time
     {
         public string StartTime { get; set; }
         public string EndTime { get; set; }

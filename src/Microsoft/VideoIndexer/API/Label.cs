@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace VideoIndexer.Api
 {
-    public class Label
+    public sealed class Label
     {
         public int Id { get; set; }
         public string Name { get; set; }
