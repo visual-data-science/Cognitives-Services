@@ -17,3 +17,6 @@ This project aims to test and present several tools for the classification of im
 
 ## Support
 Do you have any questions? Send a message to msgrubler@gmail.com
+
+## Contribute to this Project
+You are welcome to fix errors or suggest additions by creating pull requests.
