@@ -12,7 +12,12 @@ namespace VideoIndexer.Controllers
 {
     public class HomeController : Controller
     {
-        private static Dictionary<string, string> videosUrl = new Dictionary<string, string>
+        private readonly string apiKey = "<KEY>";
+        private readonly string apiUrl = "https://api.videoindexer.ai";
+        private readonly string location = "trial";
+        private readonly string accountId = "<KEY>";
+        private readonly string description = "Description";
+        private readonly Dictionary<string, string> videosUrl = new Dictionary<string, string>
         {
             {"Horse", "https://goo.gl/bwgQin"},
             {"Dog", "https://goo.gl/eaE26k"},
@@ -24,27 +29,24 @@ namespace VideoIndexer.Controllers
         [HttpGet]
         public IActionResult Video(string id)
         {
-            // That variables will load key and url where will be processed from Microsoft
-            var apiKey = "<Key>";
-            var apiUrl = "https://api.videoindexer.ai";
-            var location = "trial";
-            var accountId = "<Key>";
-            var video = videosUrl[id];
-
             // This code predict informations concern image from API Microsoft
             var videoIndexer = new VideoInformation(apiKey, apiUrl, location, accountId);
             videoIndexer.Run(new MetaInformation{
                 Name = id,
-                Description = "Description",
-                VideoUrl = video,
+                Description = description,
+                VideoUrl = videosUrl[id],
                 Privacy = Privacy.Public.ToString().ToLower()
             });
 
             // Return a view and the object that will be processed
             return View("Video", new VideoInformationViewModel{
+                Name = id,
                 PlayerWidgetUrl = videoIndexer.PlayerWidgetUrl,
                 Embed = videoIndexer.Embed,
-                Name = id
+                Insights = videoIndexer
+                    .Insights
+                    .Select(k => k.Name)
+                    .Aggregate((current, next) => $"{current}, {next}")
             });
         }
 

@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace VideoIndexer.Api
 {
-    public class VideoInformation
+    public sealed class VideoInformation
     {
         private readonly int _timeWaiting = 10000;
         private readonly string _apiUrl;
@@ -50,23 +50,17 @@ namespace VideoIndexer.Api
             }
         }
 
-        public string Insights
+        public List<Label> Insights
         {
             get
             {
-                try
+                var handler = new HttpClientHandler();
+                handler.AllowAutoRedirect = false;
+                using (var client = new HttpClient(handler))
                 {
-                    var handler = new HttpClientHandler();
-                    handler.AllowAutoRedirect = false;
-                    using (var client = new HttpClient(handler))
-                    {
-                        var insightsWidgetRequestResult = client.GetAsync($"{_apiUrl}/{_location}/Accounts/{_accountId}/Videos/{_videoId}/InsightsWidget?accessToken={_videoAccessToken}&widgetType=Keywords&allowEdit=true").Result;
-                        return insightsWidgetRequestResult.Headers.Location.ToString();
-                    }
-                }
-                catch(Exception ex)
-                {
-                    return ex.Message.ToString();
+                    var insightsResult = client.GetAsync($"{_apiUrl.Replace("api","www")}/api/v2/accounts/{_accountId}/Videos/{_videoId}/Index/?accessToken={_videoAccessToken}").Result;
+                    dynamic insightsDynam = JsonConvert.DeserializeObject(insightsResult.Content.ReadAsStringAsync().Result);
+                    return JsonConvert.DeserializeObject<List<Label>>(insightsDynam.summarizedInsights.labels.ToString());
                 }
             }
         }
