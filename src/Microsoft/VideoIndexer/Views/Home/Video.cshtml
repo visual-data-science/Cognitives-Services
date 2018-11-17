@@ -5,15 +5,18 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h2>@Model.Name - @Model.Insights</h2>
+        <h2>@Model.Name</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>@Model.Insights</h3>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-6">
-                <iframe
-                    frameborder="0" 
-                    src="@Model.PlayerWidgetUrl" 
-                    width="640" 
-                    height="360"
-                    allowfullscreen ></iframe> 
+                <video width="640" height="360" controls>
+                    <source src="@Model.UrlVideo" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
             <div class="col-md-6">
                 <iframe 

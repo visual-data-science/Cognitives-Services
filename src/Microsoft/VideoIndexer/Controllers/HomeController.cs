@@ -41,7 +41,7 @@ namespace VideoIndexer.Controllers
             // Return a view and the object that will be processed
             return View("Video", new VideoInformationViewModel{
                 Name = id,
-                PlayerWidgetUrl = videoIndexer.PlayerWidgetUrl,
+                UrlVideo = videosUrl[id],
                 Embed = videoIndexer.Embed,
                 Insights = videoIndexer
                     .Insights

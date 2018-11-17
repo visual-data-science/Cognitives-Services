@@ -4,7 +4,7 @@ namespace VideoIndexer.ViewModel
     {
         public string Name { get; set; }
 
-        public string PlayerWidgetUrl { get; set; }
+        public string UrlVideo { get; set; }
 
         public string Insights { get; set; }
 
