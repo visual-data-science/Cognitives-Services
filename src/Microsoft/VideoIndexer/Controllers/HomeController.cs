@@ -12,10 +12,10 @@ namespace VideoIndexer.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly string apiKey = "<KEY>";
+        private readonly string apiKey = "<Key>";
         private readonly string apiUrl = "https://api.videoindexer.ai";
         private readonly string location = "trial";
-        private readonly string accountId = "<KEY>";
+        private readonly string accountId = "<Key";
         private readonly string description = "Description";
         private readonly Dictionary<string, string> videosUrl = new Dictionary<string, string>
         {
@@ -24,7 +24,13 @@ namespace VideoIndexer.Controllers
             {"Lion", "https://goo.gl/FhtS2e"}
         };
 
-        public IActionResult Index() => View(videosUrl.Select(k => k.Key).ToList());
+        public IActionResult Index() 
+        { 
+            return View(videosUrl.Select(k => new HomeInformationViewModel{
+                Name = k.Key,
+                Image = $"images/{k.Key}.jpg"
+            }).ToList()); 
+        }
 
         [HttpGet]
         public IActionResult Video(string id)
